@@ -1,0 +1,39 @@
+package p466.team2.scheduleservice.web;
+
+import p466.team2.scheduleservice.domain.Video;
+import p466.team2.scheduleservice.domain.VideoService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/schedule")
+public class ScheduleController {
+    private final VideoService videoService;
+
+    public ScheduleController(VideoService videoService) {
+        this.videoService = videoService;
+    }
+
+    @GetMapping
+    public Iterable<Video> get() {
+        return videoService.viewSchedule();
+    }
+
+    @GetMapping("/now")
+    public Video getNextVideo() {
+        return videoService.viewNextVideo();
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Video post(@Valid @RequestBody Video video) {
+        return videoService.addVideoToSchedule(video);
+    }
+
+    @DeleteMapping("{title}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable String title) {
+        videoService.removeVideoFromSchedule(title);
+    }
+}
