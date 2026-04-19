@@ -37,14 +37,18 @@ public class VideoService {
     public Video addVideoToSchedule(Video video) {
         if (videoRepository.existsByTitle(video.title)) {
             throw new VideoAlreadyExistsException(video.getTitle());
-        } else if (videoRepository.overlapsByDuration(video)) {
+        }
+        /*
+        else if (videoRepository.overlapsByDuration(video)) {
             throw new VideoOverlapsWithAnotherException(video.getTitle());
         }
+
+         */
         return videoRepository.save(video);
     }
 
-    public void removeVideoFromSchedule(String title) {
-        videoRepository.deleteByTitle(title);
+    public void removeVideoFromSchedule(Long id) {
+        videoRepository.deleteById(id);
     }
 
     public Video editVideoDetails(String title, Video video) {

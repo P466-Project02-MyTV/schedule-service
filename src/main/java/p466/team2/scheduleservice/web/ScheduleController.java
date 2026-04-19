@@ -36,10 +36,10 @@ public class ScheduleController {
         return videoService.addVideoToSchedule(video);
     }
 
-    @DeleteMapping("{title}")
+    @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable String title) {
-        videoService.removeVideoFromSchedule(title);
+    public void delete(@PathVariable Long id) {
+        videoService.removeVideoFromSchedule(id);
     }
 
     @PutMapping("{title}")

@@ -1,12 +1,15 @@
 package p466.team2.scheduleservice.domain;
 
+import org.springframework.data.repository.CrudRepository;
+
 import java.util.Optional;
 
-public interface VideoRepository {
-    Iterable<Video> findAll();
+// Need to create another interface and extend it here for overlapping durations.
+public interface VideoRepository extends CrudRepository<Video, Long> {
     Optional<Video> findByTitle(String title);
     boolean existsByTitle(String title);
-    boolean overlapsByDuration(Video video);
-    Video save(Video video);
-    void deleteByTitle(String title);
+
+
+    @Override
+    void deleteById(Long id);
 }

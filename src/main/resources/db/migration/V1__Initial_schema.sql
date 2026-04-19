@@ -1,8 +1,7 @@
-DROP TABLE IF EXISTS video;
 CREATE TABLE video (
     id                  BIGSERIAL PRIMARY KEY NOT NULL,
     version             integer NOT NULL,
-    title               varchar(255) UNIQUE NOT NULL,
+    title               varchar(255) NOT NULL,
     date                varchar(255) NOT NULL,
     start               varchar(255) NOT NULL,
     duration            varchar(255) NOT NULL,

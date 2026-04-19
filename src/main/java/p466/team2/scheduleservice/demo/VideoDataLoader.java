@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import p466.team2.scheduleservice.domain.Video;
 import p466.team2.scheduleservice.domain.VideoRepository;
 
+import java.util.List;
+
 @Component
 @Profile("testdata")
 public class VideoDataLoader {
@@ -18,11 +20,11 @@ public class VideoDataLoader {
 
     @EventListener(ApplicationReadyEvent.class)
     public void loadVideoTestData() {
+        // Starting from a fresh database.
+        videoRepository.deleteAll();
         var firstVideo = new Video("First Video", "12/20/2000", "12:30", "01:00", "filler");
         var middleVideo = new Video("Middle Video", "12/20/2005", "12:30", "01:00", "filler");
         var lastVideo = new Video("Last Video", "12/20/2010", "12:30", "01:00", "filler");
-        videoRepository.save(middleVideo);
-        videoRepository.save(lastVideo);
-        videoRepository.save(firstVideo);
+        videoRepository.saveAll(List.of(middleVideo, lastVideo, firstVideo));
     }
 }

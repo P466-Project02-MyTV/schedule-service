@@ -16,13 +16,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(ScheduleController.class)
 public class ScheduleControllerMVCTests {
 
-    /*
     @Autowired
     private MockMvc mockMvc;
 
     @MockitoBean
     private VideoService videoService;
 
+    /*
     @Test
     void whenGetScheduleNotExistingThenShouldReturn422() throws Exception {
         String title = "Last Video", date = "12/20/2010", start = "12:30", duration = "01:00", link = "filler";
