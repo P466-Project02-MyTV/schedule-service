@@ -26,6 +26,10 @@ public class VideoService {
         return scheduleAsList;
     }
 
+    public Video viewVideoDetails(String title){
+        return videoRepository.findByTitle(title).orElseThrow(() -> new VideoNotFoundException(title));
+    }
+
     public Video viewNextVideo() {
         return viewSchedule().iterator().next();
     }
@@ -41,5 +45,21 @@ public class VideoService {
 
     public void removeVideoFromSchedule(String title) {
         videoRepository.deleteByTitle(title);
+    }
+
+    public Video editVideoDetails(String title, Video video) {
+        return videoRepository.findByTitle(title).map(existingVideo -> {
+            var videoToUpdate = new Video(
+                            existingVideo.getTitle(),
+                            video.getDate(),
+                            video.getStart(),
+                            video.getDuration(),
+                            video.getLink());
+                            videoToUpdate.setId(existingVideo.getId());
+                            videoToUpdate.setVersion(existingVideo.getVersion());
+                            videoToUpdate.setCreatedDate(existingVideo.getCreatedDate());
+                            videoToUpdate.setLastModifiedDate(existingVideo.getLastModifiedDate());
+            return videoRepository.save(videoToUpdate);
+                }).orElseGet(() -> addVideoToSchedule(video));
     }
 }

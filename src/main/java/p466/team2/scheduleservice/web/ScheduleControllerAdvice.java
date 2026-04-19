@@ -7,6 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import p466.team2.scheduleservice.domain.VideoNotFoundException;
 import p466.team2.scheduleservice.domain.VideoOverlapsWithAnotherException;
 
 import java.util.HashMap;
@@ -28,6 +29,12 @@ public class ScheduleControllerAdvice {
     @ExceptionHandler(VideoOverlapsWithAnotherException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_CONTENT)
     String videoOverlapsWithAnotherHandler(VideoOverlapsWithAnotherException ex) {
+        return ex.getMessage();
+    }
+
+    @ExceptionHandler(VideoNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    String videoOverlapsWithAnotherHandler(VideoNotFoundException ex) {
         return ex.getMessage();
     }
 

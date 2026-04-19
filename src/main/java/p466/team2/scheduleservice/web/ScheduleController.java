@@ -20,6 +20,11 @@ public class ScheduleController {
         return videoService.viewSchedule();
     }
 
+    @GetMapping("{title}")
+    public Video getByTitle(@PathVariable String title) {
+        return videoService.viewVideoDetails(title);
+    }
+
     @GetMapping("/now")
     public Video getNextVideo() {
         return videoService.viewNextVideo();
@@ -35,5 +40,10 @@ public class ScheduleController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable String title) {
         videoService.removeVideoFromSchedule(title);
+    }
+
+    @PutMapping("{title}")
+    public Video put(@PathVariable String title, @Valid @RequestBody Video video) {
+        return videoService.editVideoDetails(title, video);
     }
 }
