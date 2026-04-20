@@ -3,7 +3,7 @@ on: push
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: P466-Project02-MyTV/schedule-service
+  IMAGE_NAME: p466-project02-mytv/schedule-service
   VERSION: latest
 
 jobs:
