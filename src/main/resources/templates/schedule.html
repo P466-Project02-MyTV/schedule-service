@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>MyTV</title>
+    <link rel="stylesheet" th:href="@{/styles.css}" />
+</head>
+
+<div th:each="video : ${schedule}">
+    <p th:text="${video.title}">Video Name</p>
+</div>
+
+</html>

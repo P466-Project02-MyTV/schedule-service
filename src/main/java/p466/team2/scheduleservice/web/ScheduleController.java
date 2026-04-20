@@ -1,12 +1,15 @@
 package p466.team2.scheduleservice.web;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import p466.team2.scheduleservice.domain.Video;
 import p466.team2.scheduleservice.domain.VideoService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+//@RestController
+@Controller
 @RequestMapping("/schedule")
 public class ScheduleController {
     private final VideoService videoService;
@@ -16,8 +19,11 @@ public class ScheduleController {
     }
 
     @GetMapping
-    public Iterable<Video> get() {
-        return videoService.viewSchedule();
+    public String get(Model model) {
+        Iterable<Video> schedule = videoService.viewSchedule();
+        model.addAttribute("schedule", schedule);
+        return "schedule";
+        //return videoService.viewSchedule();
     }
 
     @GetMapping("{id}")
