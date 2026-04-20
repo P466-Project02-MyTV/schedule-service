@@ -20,14 +20,9 @@ public class ScheduleController {
         return videoService.viewSchedule();
     }
 
-    @GetMapping("{title}")
-    public Video getByTitle(@PathVariable String title) {
-        return videoService.viewVideoDetails(title);
-    }
-
-    @GetMapping("/now")
-    public Video getNextVideo() {
-        return videoService.viewNextVideo();
+    @GetMapping("{id}")
+    public Video getById(@PathVariable Long id) {
+        return videoService.viewVideoDetails(id);
     }
 
     @PostMapping
@@ -42,8 +37,8 @@ public class ScheduleController {
         videoService.removeVideoFromSchedule(id);
     }
 
-    @PutMapping("{title}")
-    public Video put(@PathVariable String title, @Valid @RequestBody Video video) {
-        return videoService.editVideoDetails(title, video);
+    @PutMapping("{id}")
+    public Video put(@PathVariable Long id, @Valid @RequestBody Video video) {
+        return videoService.editVideoDetails(id, video);
     }
 }

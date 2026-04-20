@@ -26,10 +26,12 @@ spring:
   datasource: #This is where we can easily change what database is connected to our schedule service
     username: user
     password: password
-    url: jdbc:postgresql://localhost:5432/mytvdb_schedule
+    url: jdbc:postgresql://localhost:5432/mytvdb
     hikari:
       connection-timeout: 2000
       maximum-pool-size: 5
+  flyway:
+    clean-disabled: false
 
 management:
   endpoints:

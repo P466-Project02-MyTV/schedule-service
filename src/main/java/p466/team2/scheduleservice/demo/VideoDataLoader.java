@@ -22,9 +22,9 @@ public class VideoDataLoader {
     public void loadVideoTestData() {
         // Starting from a fresh database.
         videoRepository.deleteAll();
-        var firstVideo = new Video("First Video", "12/20/2000", "12:30", "01:00", "filler");
-        var middleVideo = new Video("Middle Video", "12/20/2005", "12:30", "01:00", "filler");
-        var lastVideo = new Video("Last Video", "12/20/2010", "12:30", "01:00", "filler");
+        var firstVideo = new Video("First Video", "12/20/2000", "12:30:00", "PT1H30M30S", "filler");
+        var middleVideo = new Video("Middle Video", "12/20/2005", "15:30:00", "PT1H30M30S", "filler");
+        var lastVideo = new Video("Last Video", "12/20/2010", "18:30:00", "PT1H30M30S", "filler");
         videoRepository.saveAll(List.of(middleVideo, lastVideo, firstVideo));
     }
 }

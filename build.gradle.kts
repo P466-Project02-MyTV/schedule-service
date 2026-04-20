@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
+
 plugins {
     java
     id("org.springframework.boot") version "4.0.5"
@@ -36,6 +38,7 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-config")
     implementation("org.springframework.retry:spring-retry")
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
+    implementation("org.springframework.boot:spring-boot-starter-flyway:4.0.1")
     implementation("org.flywaydb:flyway-core:11.1.0")
     implementation("org.flywaydb:flyway-database-postgresql:11.1.0")
 
@@ -53,10 +56,12 @@ dependencies {
 }
 
 flyway {
-    url = "jdbc:postgresql://localhost:5432/mytvdb_schedule"
+    url = "jdbc:postgresql://localhost:5432/mytvdb"
     user = "user"
     password = "password"
     locations = arrayOf("filesystem:src/main/resources/db/migration")
+    cleanDisabled = false
+    cleanOnValidationError = true
 }
 
 dependencyManagement {
@@ -67,6 +72,22 @@ dependencyManagement {
 }
 
 tasks.named<org.springframework.boot.gradle.tasks.run.BootRun>("bootRun") {systemProperty("spring.profiles.active", "testdata")}
+tasks.named<BootBuildImage>("bootBuildImage"){
+    imageName.set(project.name)
+    environment = mapOf("BP_JVM_VERSION" to "17.*")
+    docker{
+        publishRegistry {
+            //username.set(property("registryUsername") as String)
+            //password.set(property("registryToken") as String)
+            //url.set(property("registryUrl") as String)
+            username = project.findProperty("registryUsername") as String?
+            password = project.findProperty("registryToken") as String?
+            url = project.findProperty("registryUrl") as String?
+        }
+    }
+}
+
+
 
 tasks.withType<Test> {
     useJUnitPlatform()
