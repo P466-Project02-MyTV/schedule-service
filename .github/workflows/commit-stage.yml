@@ -3,7 +3,7 @@ on: push
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: grilotrix/schedule-service
+  IMAGE_NAME: P466-Project02-MyTV/schedule-service
   VERSION: latest
 
 jobs:
