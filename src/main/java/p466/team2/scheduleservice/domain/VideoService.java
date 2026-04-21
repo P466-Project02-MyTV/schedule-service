@@ -19,7 +19,14 @@ public class VideoService {
     }
 
     public Video addVideoToSchedule(Video video) {
-        if (videoRepository.checkIfVideosOverlap(video)) {
+        boolean overlapping = false;
+        for (Video other : videoRepository.findAll()) {
+            if (video.getStartDateTime().isBefore(other.getEndDateTime()) && other.getStartDateTime().isBefore(video.getEndDateTime())) {
+                overlapping = true;
+                break;
+            }
+        }
+        if (overlapping) {
             throw new VideoOverlapsWithAnotherException(video.getTitle());
         }
         return videoRepository.save(video);
