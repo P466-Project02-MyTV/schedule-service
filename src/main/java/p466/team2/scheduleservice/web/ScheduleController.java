@@ -6,8 +6,6 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-
 @RestController
 @RequestMapping("/schedule")
 public class ScheduleController {
@@ -29,7 +27,7 @@ public class ScheduleController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Video post(@Valid @RequestBody Video video) throws IOException {
+    public Video post(@Valid @RequestBody Video video) {
         return videoService.addVideoToSchedule(video);
     }
 
