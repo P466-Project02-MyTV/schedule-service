@@ -88,6 +88,31 @@ public class Video implements Comparable<Video> {
         }
     }
 
+    /*
+    public Long getDurationFromLink(String videoUrl) throws IOException {
+        String streamUrl = executeCommand("yt-dlp", "-g", "-f", "best", videoUrl);
+
+        String duration = executeCommand("ffprobe", "-v", "error",
+                "-show_entries", "format=duration",
+                "-of", "default=noprint_wrappers=1:nokey=1",
+                streamUrl);
+        return Long.parseLong(duration.substring(0, duration.indexOf(".")));
+    }
+
+    public String getTitleFromLink(String videoUrl) throws IOException {
+        return executeCommand("yt-dlp", "--get-title", videoUrl);
+    }
+
+    public String executeCommand(String... command) throws IOException {
+        ProcessBuilder pb = new ProcessBuilder(command);
+        Process process = pb.start();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+            return reader.readLine(); // Returns first line of output
+        }
+    }
+
+     */
+
     public Long getId() {
         return id;
     }
