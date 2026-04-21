@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import p466.team2.scheduleservice.domain.Video;
 import p466.team2.scheduleservice.domain.VideoRepository;
 
+import java.io.IOException;
 import java.util.List;
 
 @Component
@@ -19,12 +20,12 @@ public class VideoDataLoader {
     }
 
     @EventListener(ApplicationReadyEvent.class)
-    public void loadVideoTestData() {
+    public void loadVideoTestData() throws IOException {
         // Starting from a fresh database.
         videoRepository.deleteAll();
-        var firstVideo = new Video("First Video", "12/20/2000", "12:30:00", "PT1H30M30S", "filler");
-        var middleVideo = new Video("Middle Video", "12/20/2005", "15:30:00", "PT1H30M30S", "filler");
-        var lastVideo = new Video("Last Video", "12/20/2010", "18:30:00", "PT1H30M30S", "filler");
+        var firstVideo = new Video("12/20/2000-12:30:00", "https://youtu.be/QP4ExX773B4?si=iWQqN4zGZUDty6se");
+        var middleVideo = new Video("12/20/2005-15:30:00", "https://youtu.be/cDfPt0bX90E?si=Ji_gWR6JP6HApthe");
+        var lastVideo = new Video("12/20/2010-18:30:00", "https://youtu.be/ob2Wxc4pgyE?si=b06TqEL_eI8BSWgK");
         videoRepository.saveAll(List.of(middleVideo, lastVideo, firstVideo));
     }
 }

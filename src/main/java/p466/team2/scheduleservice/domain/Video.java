@@ -8,6 +8,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.Version;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -58,18 +61,22 @@ public class Video implements Comparable<Video> {
 
     LocalDateTime endDateTime;
 
-    public Video(String title, String date, String start, String duration, String link) {
-        String startTimeAsString = date + " " + start;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
-        LocalDateTime startDateTime = LocalDateTime.parse(startTimeAsString, formatter);
-        LocalDateTime endDateTime = startDateTime.plus(Duration.parse(duration));
+    public Video(String start, String link) throws IOException {
+        String title = getTitleFromLink(link);
+        String date = start.substring(0, start.indexOf("-"));
+        String rawDuration = getDurationFromLink(link);
+        String noDecimalDuration = rawDuration.substring(0, rawDuration.indexOf("."));
+        long duration = Long.parseLong(noDecimalDuration) + 1; // Rounding up
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy-HH:mm:ss");
+        LocalDateTime startDateTime = LocalDateTime.parse(start, formatter);
+        LocalDateTime endDateTime = startDateTime.plus(Duration.ofSeconds(duration));
 
         this.id = null;
         this.version = 0;
         this.title = title;
         this.date = date;
         this.start = start;
-        this.duration = duration;
+        this.duration = Long.toString(duration);
         this.link = link;
         this.createdDate = null;
         this.lastModifiedDate = null;
@@ -88,15 +95,13 @@ public class Video implements Comparable<Video> {
         }
     }
 
-    /*
-    public Long getDurationFromLink(String videoUrl) throws IOException {
+    public String getDurationFromLink(String videoUrl) throws IOException {
         String streamUrl = executeCommand("yt-dlp", "-g", "-f", "best", videoUrl);
 
-        String duration = executeCommand("ffprobe", "-v", "error",
+        return executeCommand("ffprobe", "-v", "error",
                 "-show_entries", "format=duration",
                 "-of", "default=noprint_wrappers=1:nokey=1",
                 streamUrl);
-        return Long.parseLong(duration.substring(0, duration.indexOf(".")));
     }
 
     public String getTitleFromLink(String videoUrl) throws IOException {
@@ -110,8 +115,6 @@ public class Video implements Comparable<Video> {
             return reader.readLine(); // Returns first line of output
         }
     }
-
-     */
 
     public Long getId() {
         return id;

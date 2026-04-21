@@ -2,6 +2,8 @@ package p466.team2.scheduleservice.domain;
 
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 @Service
 public class VideoService {
     private final VideoRepository videoRepository;
@@ -38,16 +40,18 @@ public class VideoService {
 
     public Video editVideoDetails(Long id, Video video) {
         return videoRepository.findById(id).map(existingVideo -> {
-            var videoToUpdate = new Video(
-                            video.getTitle(),
-                            video.getDate(),
-                            video.getStart(),
-                            video.getDuration(),
-                            video.getLink());
-                            videoToUpdate.setId(existingVideo.getId());
-                            videoToUpdate.setVersion(existingVideo.getVersion());
-                            videoToUpdate.setCreatedDate(existingVideo.getCreatedDate());
-                            videoToUpdate.setLastModifiedDate(existingVideo.getLastModifiedDate());
+            Video videoToUpdate = null;
+            try {
+                videoToUpdate = new Video(
+                                video.getStart(),
+                                video.getLink());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            videoToUpdate.setId(existingVideo.getId());
+            videoToUpdate.setVersion(existingVideo.getVersion());
+            videoToUpdate.setCreatedDate(existingVideo.getCreatedDate());
+            videoToUpdate.setLastModifiedDate(existingVideo.getLastModifiedDate());
             return videoRepository.save(videoToUpdate);
                 }).orElseGet(() -> addVideoToSchedule(video));
     }
