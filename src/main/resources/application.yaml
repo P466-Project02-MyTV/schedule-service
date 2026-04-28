@@ -6,8 +6,11 @@ server:
     threads:
       max: 50
       min-spare: 5
+  shutdown: graceful
 
 spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 15s
   application:
     name: schedule-service
   config:

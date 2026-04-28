@@ -88,6 +88,7 @@ public class Video implements Comparable<Video> {
         }
     }
 
+    // This logic works, but slows things down. Also, causes issues with docker composed.
     /*
     public Long getDurationFromLink(String videoUrl) throws IOException {
         String streamUrl = executeCommand("yt-dlp", "-g", "-f", "best", videoUrl);
